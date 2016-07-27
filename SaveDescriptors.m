@@ -1,6 +1,6 @@
 %% Load Saved descriptors and frames for a given dataset.
 %% 2 experiments, 14 channels, 10 Subjects.
-function F = SaveDescriptors(labelRange,epochRange,channelRange, edge_thresh, psiftscale, psiftdescriptordensity, save)
+function F = SaveDescriptors(labelRange,epochRange,channelRange, edge_thresh, psiftscale, psiftdescriptordensity, save, KS)
 
 fprintf('Saving Descriptors...\n');
     for epoch=epochRange
@@ -8,7 +8,11 @@ fprintf('Saving Descriptors...\n');
             label=labelRange(epoch);
             %F(channel,experiment,s).descriptors = dlmread(sprintf('%ssift.data.s.%d.e.%d.c.%d.descriptors.dat',getdatabasepath(),s,experiment,channel));
             %F(channel,experiment,s).frames = dlmread(sprintf('%ssift.data.s.%d.e.%d.c.%d.frames.dat',getdatabasepath(),s,experiment,channel));
-            [frames, desc] = ConvertToDescriptor(channel,label,epoch,edge_thresh, psiftscale, psiftdescriptordensity);
+            if (size(KS,2) == 0)
+               [frames, desc] = ConvertToDescriptor(channel,label,epoch, edge_thresh, psiftscale, psiftdescriptordensity);
+            else
+               [frames, desc] = PlaceDescriptors(channel,label,epoch, psiftscale, psiftdescriptordensity,KS);
+            end
 
             %if (save==1)
                 %fprintf('%ssift.data.s.%d.e.%d.c.%d.frames.dat',getdatabasepath(),epoch,label,channel);

@@ -1,23 +1,23 @@
-function output = fakeeegoutput(imagescale, class, nSampleFreq)
+function output = fakeeegoutput(imagescale, class, nSampleFreq, channels)
 
 % Ru?do uniforme con varianza 2.
-output = rand(nSampleFreq,14)*0;
-%output = FakeNoisyEeg(14,nSampleFreq);
+output = rand(nSampleFreq,channels)*0;
+%output = FakeNoisyEeg(channels,nSampleFreq);
     
-Fs = nSampleFreq;                    % Sampling frequency (EPOC frequency)
+Fs = nSampleFreq;             % Sampling frequency (EPOC frequency)
 T = 1/Fs;                     % Sample time
 L = size(output,1);           % Length of signal
 t = (0:L-1)*T;                % Time vector
 
 %x1 = sin(2*pi*40*(1:4000)/1000);
 
-if (class == 10)
+if (class == 1)
     % I add a 50 Hz TRASH signal to understand if the FFT is working.
-    for ch=1:14
-        output(:,ch) = (4.0*sin(2*pi*16*t)') + output(:,ch) ;
+    for ch=1:channels
+        output(:,ch) = (2.0*sin(2*pi*16*t)') + output(:,ch) ;
     end
-elseif (class == 20)
-    for ch=1:14
+elseif (class == 2)
+    for ch=1:channels
         output(:,ch) = (2.0*sin(2*pi*16*t)') + output(:,ch) ;
     end
 end
