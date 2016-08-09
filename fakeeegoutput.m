@@ -18,7 +18,7 @@ if (class == 1)
     end
 elseif (class == 2)
     for ch=channelRange
-        output(:,ch) = (2.0*sin(2*pi*16*t)') + output(:,ch) ;
+        output(:,ch) = (8.0*sin(2*pi*16*t)') + output(:,ch) ;
     end
 end
 

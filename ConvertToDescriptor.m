@@ -51,7 +51,7 @@ else
     while (i<=size(DOTS(epoch,channel).XX,1))
         %if (DOTS(epoch,channel).YY(i)==30)
         
-        if ((DOTS(epoch,channel).YY(i)-siftscale*6)>20 &&  (DOTS(epoch,channel).YY(i)+siftscale*6)<=width) 
+        if ((DOTS(epoch,channel).YY(i)-siftscale*6)>0 &&  (DOTS(epoch,channel).YY(i)+siftscale*6)<=width) 
         
             if (ssize>0)
                 fc = [DOTS(epoch,channel).YY(i);DOTS(epoch,channel).XX(i);siftscale;0];
@@ -76,9 +76,10 @@ else
             
         end
         i=i+iterator;
-        if (size(FC,2)>=1)
-            break;
-        end
+        % Limit the number of descriptors generated.
+        %if (size(FC,2)>=1)
+        %    break;
+        %end
     end
     
     
@@ -98,7 +99,8 @@ else
     %         FC = [FC fc];
     %     end
     
-    [frames, descriptors] = vl_sift(I,'frames',FC,'floatdescriptors','verbose','verbose','verbose','verbose');
+    %[frames, descriptors] = vl_sift(I,'frames',FC,'floatdescriptors','verbose','verbose','verbose','verbose');
+    [frames, descriptors] = vl_sift(I,'frames',FC);
     
     %[frames, descriptors] = vl_sift(I,'frames',FC,'verbose','verbose','verbose','verbose');
     
