@@ -46,10 +46,14 @@ while (i<=size(DOTS(epoch,channel).XX,1))
     end
 end
 
+if (size(FC,2)==0)
+    sprintf('The descriptor does not fit: %d', siftscale*6)
+    error('error');
+end
 
-[frames, descriptors] = vl_sift(I,'frames',FC,'floatdescriptors','verbose','verbose','verbose','verbose');
+%[frames, descriptors] = vl_sift(I,'frames',FC,'floatdescriptors','verbose','verbose','verbose','verbose');
 
-%[frames, descriptors] = vl_sift(I,'frames',FC,'verbose','verbose','verbose','verbose');
+[frames, descriptors] = vl_sift(I,'frames',FC,'verbose','verbose','verbose','verbose');
 
 
 end

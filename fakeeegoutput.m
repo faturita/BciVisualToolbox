@@ -11,12 +11,12 @@ t = (0:L-1)*T;                % Time vector
 
 %x1 = sin(2*pi*40*(1:4000)/1000);
 
-if (class == 1)
+if (class == 11)
     % I add a 50 Hz TRASH signal to understand if the FFT is working.
     for ch=channelRange
         output(:,ch) = (4.0*sin(2*pi*16*t)') + output(:,ch) ;
     end
-elseif (class == 2)
+elseif (class == 21)
     for ch=channelRange
         output(:,ch) = (8.0*sin(2*pi*16*t)') + output(:,ch) ;
     end
