@@ -1,7 +1,11 @@
 %% Converts the signal for the subject,experiment,channel stored in output into a saved image.
 %% If the signal amplitud is less than 150, it is defaulted to 150.
-function image = eegimagescaled(epoch,label,output,channel,scale, siftinterpolated)
+function image = eegimagescaled(epoch,label,output,channel,scale, siftinterpolated, drawzerolevel)
 timespan = size(output,1);
+
+if (nargin<7)
+    drawzerolevel=0;
+end
 
 ALL = 1;
 global DOTS;
@@ -56,7 +60,9 @@ for t=1:scale:timespan
         error('NOOOOOOO');
     end
     
-    
+    if (drawzerolevel == 1)
+        B(zerolevel,t) = 255;
+    end
     B(plottedsignal(t),t) = 255;
 end
 %figure('PaperPositionMode','manual');
