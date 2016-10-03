@@ -18,7 +18,7 @@ if (baseheight < 150)
 end
 
 zerolevel= floor(baseheight/2) - floor((max(signal)+min(signal))/2);
-if (timespan ~= 160 && timespan ~= 50 && timespan ~= 128 && timespan ~=32 && timespan ~=1280 && timespan ~=512 && timespan ~= 256)
+if (timespan ~= 160 && timespan ~= 50 && timespan ~= 128 && timespan ~=32 && timespan ~=1280 && timespan ~=512 && timespan ~= 256 && timespan ~= 240)
     error('Not enough data points!!!');
 else
     %baseheight = rms(output,1)*4;
