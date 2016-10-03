@@ -8,7 +8,7 @@ function descriptor = DisplayDescriptorImage(frames,descriptors,epoch,label,chan
 fprintf('e.%d.l.%d.c.%d.tif\n',epoch,label,channel);
 I1 = imread(sprintf('%se.%d.l.%d.c.%d.tif',getimagepath(),epoch,label,channel));
 %img1=imtool(I1);
-figure;
+%figure;
 img1 = imshow(I1);
 
 if (descriptorId > 0)
@@ -38,7 +38,7 @@ if (descriptorId > 0)
 
     h3 = vl_plotsiftdescriptor(descriptors(:,descriptorId),frame) ;
     set(h3,'color','g') ;
-else
+elseif (descriptorId <0)
     h1 = vl_plotframe(frames) ;
     set(h1,'color','k','linewidth',3) ;
 
@@ -46,6 +46,8 @@ else
     set(h3,'color','g') ;    
     
     descriptor = descriptors(:,1);
+else
+    descriptor = descriptors;
 end
 
 end
