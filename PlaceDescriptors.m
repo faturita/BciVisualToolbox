@@ -47,7 +47,7 @@ while (i<=size(DOTS(epoch,channel).XX,1))
 end
 
 if (size(FC,2)==0)
-    sprintf('The descriptor does not fit: %d', siftscale*6)
+    sprintf('The descriptor does not fit inside completely inside the image from the desired position: %d', siftscale*6)
     error('error');
 end
 
