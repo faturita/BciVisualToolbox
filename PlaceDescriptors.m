@@ -57,7 +57,6 @@ end
 
 %[frames, descriptors] = vl_sift(I,'frames',FC,'floatdescriptors','verbose','verbose','verbose','verbose');
 [frames, descriptors] = vl_sift(I,'frames',FC);
-
 %[frames, descriptors] = vl_sift(I,'frames',FC,'verbose','verbose','verbose','verbose');
 
 
