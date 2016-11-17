@@ -97,6 +97,9 @@ end
 fprintf('Saving data to e.%d.l.%d.c.%d.tif \n',epoch,label,channel);
 imwrite(B,sprintf('%se.%d.l.%d.c.%d.tif',getimagepath(),epoch,label,channel),'Compression','none','Resolution',[timespan height]);
 
+imwrite(B,sprintf('%se.%d.l.%d.c.%d.png',getimagepath(),epoch,label,channel));
+
+
 %imwrite(rgb2gray(imread('C:\Users\User\Desktop\shoes.bmp')), 'C:\Users\User\Desktop\shoes.bmp');
 
 s=[height timespan];

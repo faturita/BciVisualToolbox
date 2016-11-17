@@ -8,16 +8,14 @@ t = (0:L-1)*T;                % Time vector
 signal = signal(:,channel)';
 
 
-%d = fdesign.bandstop('Fp1,Fst1,Fst2,Fp2,Ap1,Ast,Ap2',18,19,21,22,0.5,50,0.5,Fs);
-%d = fdesign.lowpass('Fp,Fst,Ap,Ast',15,16,10,0.1,Fs);
-d = fdesign.lowpass('N,Fc',10,10,Fs);
+%d = fdesign.bandstop('Fp1,Fst1,Fst2,Fp2,Ap1,Ast,Ap2',0.1,0.2,10,12,0.5,50,0.5,Fs);
+d = fdesign.lowpass('Fp,Fst,Ap,Ast',10,11,10,0.1,Fs);
+%d = fdesign.lowpass('N,Fc',10,10,Fs);
 
 % view filter's magnitude response
 Hd = design(d);
 %fvtool(Hd)
 % filter you data
-
-
 
 %x1 = 10*sin(2*pi*10*t) + signal ;
 

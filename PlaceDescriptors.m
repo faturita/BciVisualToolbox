@@ -29,6 +29,10 @@ while (i<=size(DOTS(epoch,channel).XX,1))
 
     if ((DOTS(epoch,channel).YY(i)-siftscale*6)>0 &&  (DOTS(epoch,channel).YY(i)+siftscale*6)<=width) 
 
+        while ( KS(keypoints) < DOTS(epoch,channel).YY(i) )
+            keypoints = keypoints + 1;
+        end
+        
         if (DOTS(epoch,channel).YY(i) == KS(keypoints))
             fc = [DOTS(epoch,channel).YY(i);DOTS(epoch,channel).XX(i);siftscale;0];
 
@@ -47,7 +51,7 @@ while (i<=size(DOTS(epoch,channel).XX,1))
 end
 
 if (size(FC,2)==0)
-    sprintf('The descriptor does not fit inside completely inside the image from the desired position: %d', siftscale*6)
+    sprintf('None of the provider positions has room for any descriptor  to fit inside completely inside the image from the desired position: %d', siftscale*6)
     error('error');
 end
 
