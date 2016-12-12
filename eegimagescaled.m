@@ -1,9 +1,12 @@
 %% Converts the signal for the subject,experiment,channel stored in output into a saved image.
 %% If the signal amplitud is less than 150, it is defaulted to 150.
-function image = eegimagescaled(epoch,label,output,channel,scale, siftinterpolated, drawzerolevel)
+function image = eegimagescaled(epoch,label,output,channel,scale, siftinterpolated, drawzerolevel,save)
 timespan = size(output,1);
 
-if (nargin<7)
+if (nargin<8)
+    save=1;
+    drawzerolevel=0;
+elseif (nargin<7)
     drawzerolevel=0;
 end
 
@@ -94,11 +97,11 @@ end
 
 %B = vl_imsmooth(B,0.2);
 
-fprintf('Saving data to e.%d.l.%d.c.%d.tif \n',epoch,label,channel);
-imwrite(B,sprintf('%se.%d.l.%d.c.%d.tif',getimagepath(),epoch,label,channel),'Compression','none','Resolution',[timespan height]);
-
-imwrite(B,sprintf('%se.%d.l.%d.c.%d.png',getimagepath(),epoch,label,channel));
-
+if (save)
+    fprintf('Saving data to e.%d.l.%d.c.%d.tif \n',epoch,label,channel);
+    imwrite(B,sprintf('%se.%d.l.%d.c.%d.tif',getimagepath(),epoch,label,channel),'Compression','none','Resolution',[timespan height]);
+    imwrite(B,sprintf('%se.%d.l.%d.c.%d.png',getimagepath(),epoch,label,channel));
+end
 
 %imwrite(rgb2gray(imread('C:\Users\User\Desktop\shoes.bmp')), 'C:\Users\User\Desktop\shoes.bmp');
 

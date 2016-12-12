@@ -1,14 +1,8 @@
-function [frames, descriptors] = PlaceDescriptors(channel,label,epoch, psiftscale, psiftdescriptordensity, KS)
-
-global DOTS;
+function [frames, descriptors] = PlaceDescriptorsByImage(image,DOTS,psiftscale, psiftdescriptordensity, KS)
 
 verbose=GetParameter('verbose');
 
-file = sprintf('e.%d.l.%d.c.%d.tif',epoch,label,channel);
-
-if (verbose) fprintf ('Image File %s\n', file); end
-
-I = imread(sprintf('%s%s',getimagepath(),file));
+I = image;
 I = single(I);
 
 %  VL SIFT
@@ -24,24 +18,17 @@ ssize=psiftdescriptordensity;
 iterator=1;
 keypoints=1;
 i=1;
-%KS
-%DOTS(epoch,channel).YY
-
-while (i<=size(DOTS(epoch,channel).YY,1))
+while (i<=size(DOTS.XX,1))
     %if (DOTS(epoch,channel).YY(i)==30)
 
-    % As long as the full descriptor fills within the available image
-    % space....
-    if ((DOTS(epoch,channel).YY(i)-siftscale*6)>0 &&  (DOTS(epoch,channel).YY(i)+siftscale*6)<=width) 
+    if ((DOTS.YY(i)-siftscale*6)>0 &&  (DOTS.YY(i)+siftscale*6)<=width) 
 
-        % if some of the keypoints are located before the margins, skip
-        % them
-        while  (keypoints<(size(KS,2)) && ( KS(keypoints) < DOTS(epoch,channel).YY(i) ) )
+        while ( KS(keypoints) < DOTS.YY(i) )
             keypoints = keypoints + 1;
         end
         
-        if (DOTS(epoch,channel).YY(i) == KS(keypoints))
-            fc = [DOTS(epoch,channel).YY(i);DOTS(epoch,channel).XX(i);siftscale;0];
+        if (DOTS.YY(i) == KS(keypoints))
+            fc = [DOTS.YY(i);DOTS.XX(i);siftscale;0];
 
             %fc = [k;75;2;0];
 
