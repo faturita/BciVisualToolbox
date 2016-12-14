@@ -25,7 +25,7 @@ if (baseheight < 150)
 end
 
 zerolevel= floor(baseheight/2) - floor((max(signal)+min(signal))/2);
-if (timespan ~= 160 && timespan ~= 50 && timespan ~= 128 && timespan ~=32 && timespan ~=1280 && timespan ~=512 && timespan ~= 256 && timespan ~= 240)
+if (timespan ~= 160 && timespan ~= 50 && timespan ~= 128 && timespan ~=32 && timespan ~=1280 && timespan ~=512 && timespan ~= 256 && timespan ~= 240 && timespan ~= 64)
     error('Not enough data points!!!');
 else
     %baseheight = rms(output,1)*4;
@@ -100,7 +100,7 @@ end
 if (save)
     fprintf('Saving data to e.%d.l.%d.c.%d.tif \n',epoch,label,channel);
     imwrite(B,sprintf('%se.%d.l.%d.c.%d.tif',getimagepath(),epoch,label,channel),'Compression','none','Resolution',[timespan height]);
-    imwrite(B,sprintf('%se.%d.l.%d.c.%d.png',getimagepath(),epoch,label,channel));
+    %imwrite(B,sprintf('%se.%d.l.%d.c.%d.png',getimagepath(),epoch,label,channel));
 end
 
 %imwrite(rgb2gray(imread('C:\Users\User\Desktop\shoes.bmp')), 'C:\Users\User\Desktop\shoes.bmp');

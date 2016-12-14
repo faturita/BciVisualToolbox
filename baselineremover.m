@@ -1,13 +1,17 @@
-function X = baselineremover(signal,start,end)
+function X = baselineremover(signal,start,windowsize,channelRange,downsize)
 
-baseline = data.X( (data.trial(trial)+64*flash)-51:(data.trial(trial)+64*flash)+Fs*length-1,:);
-         
-        for channel=channelRange
-           baseline(:,channel) = bf(baseline(:,channel),1:51,'pchip');
-           %output(:,channel) = baseline(51:51+256-1,channel);
-           %[n,m]=size(output);
-           %output=output - ones(n,1)*mean(baseline(1:51-1,:),1);           
-        end
-        %figure;plot(output(:,2));
+baseline = signal( start- floor(51/downsize):start+windowsize-1,:);
+
+output = zeros(windowsize,size(channelRange,2));
+
+for channel=channelRange
+   baseline(:,channel) = bf(baseline(:,channel),1:floor(51/downsize),'pchip');
+   output(:,channel) = baseline(floor(51/downsize):floor(51/downsize)+windowsize-1,channel);
+   %[n,m]=size(output);
+   %output=output - ones(n,1)*mean(baseline(1:51-1,:),1);           
+end
+%figure;plot(output(:,2));
+
+X = output;
 
 end
