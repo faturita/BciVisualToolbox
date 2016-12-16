@@ -1,5 +1,56 @@
 % https://www.mathworks.com/help/signal/examples/measuring-signal-similarities.html
 
+Fs=256;
+
+signal= fakep300(1, 1,1:1,Fs);   
+
+T = 1/Fs;                     % Sample time
+L = size(signal,2);                     % Length of signal
+t = (0:L-1)*T;                % Time vector
+
+% I add a 50 Hz TRASH signal to understand if the FFT is working.
+x1 = 10.7*sin(2*pi*20*t) + signal ;
+
+figure(1);plot(x1);
+
+figure(2);drawfft(x1',true,Fs);
+
+[b,a] = butter(4,9/(Fs/2));
+
+%x1 = 10*sin(2*pi*10*t) + signal ;
+
+gr = grpdelay(b,a,Fs);   % plot group delay
+D = mean(gr); % filter delay in samples
+D = floor(D);
+
+ 
+x1  = filter(b,a,[x1; zeros(D,1)]);% Append D zeros to the input data
+x2  = x1(D+1:end); % Shift data to compensate for delay
+  
+
+   
+figure(3);plot(x2);
+
+figure(4);drawfft(x2', true, Fs);
+
+
+fdsfdsfs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 % Load data
 load relatedsig.mat
 
