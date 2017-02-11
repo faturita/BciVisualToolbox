@@ -28,10 +28,11 @@ f = Fs/2*linspace(0,1,NFFT/2+1);
 
 if (drawme == 1)
     % Plot single-sided amplitude spectrum.
-    figure;
+    %figure;
     plot(f,2*abs(Y(1:NFFT/2+1))) ;
     %axis([6 14 -0.2 2.5]);
-    axis([0 60 -0.2 0.6]);
+    %axis([0 60 -0.2 0.6]);
+    axis([0 60 -0.2 13]);
     xlabel('Frequency (Hz)');
     ylabel('|Y(f)|');
 end
