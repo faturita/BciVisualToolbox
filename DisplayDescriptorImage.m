@@ -48,8 +48,8 @@ if (descriptorId > 0)
 
     descriptor = descriptors;
 
-    h1 = vl_plotframe(frame) ;
-    set(h1,'color','k','linewidth',3) ;
+    %h1 = vl_plotframe(frame) ;
+    %set(h1,'color','k','linewidth',3) ;
 
     h3 = vl_plotsiftdescriptor(descriptors(:,descriptorId),frame) ;
     set(h3,'color','g') ;
