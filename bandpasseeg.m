@@ -1,6 +1,6 @@
 function X = bandpasseeg(signal, channelRange, Fs)
 % Band pass filter
-[b,a] = butter(4,9/(Fs/2));
+[b,a] = butter(4,5/(Fs/2));
 
 %x1 = 10*sin(2*pi*10*t) + signal ;
 
