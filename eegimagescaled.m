@@ -10,6 +10,8 @@ elseif (nargin<7)
     drawzerolevel=0;
 end
 
+error ('DO NOT USE ME');
+
 ALL = 1;
 global DOTS;
 

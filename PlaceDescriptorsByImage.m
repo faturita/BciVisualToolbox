@@ -1,3 +1,8 @@
+% Based on a given image, with input points DOTS, and SIFT scale psiftscale
+% SIFT descriptors are placed according to KS.
+%
+% If KS is [], descriptors are located according to psiftdescriptordensity
+% as long as they fit inside the available image space.
 function [frames, descriptors] = PlaceDescriptorsByImage(image,DOTS,psiftscale, psiftdescriptordensity, KS)
 
 verbose=GetParameter('verbose');
@@ -12,7 +17,7 @@ FC = [];
 width=size(I,2);
 
 % PARAMETROS IMPORTANTES
-siftscale=psiftscale;
+siftscale=psiftscale(1);
 ssize=psiftdescriptordensity;
 
 iterator=1;
@@ -23,15 +28,16 @@ while (i<=size(DOTS.XX,1))
 
     if ((DOTS.YY(i)-siftscale*6)>0 &&  (DOTS.YY(i)+siftscale*6)<=width) 
 
+        %while  (keypoints<(size(KS,2)) && ( KS(keypoints) < DOTS(epoch,channel).YY(i) ) )
         while ( KS(keypoints) < DOTS.YY(i) )
             keypoints = keypoints + 1;
         end
         
         if (DOTS.YY(i) == KS(keypoints))
-            fc = [DOTS.YY(i);DOTS.XX(i);siftscale;0];
-
+            fc = [DOTS.YY(i);DOTS.XX(i);siftscale;psiftscale(2);0];
+            fc = [DOTS.YY(i);75;psiftscale(1);psiftscale(2);0];
             %fc = [k;75;2;0];
-
+            
             FC = [FC fc];
             iterator=ssize;  
             keypoints=keypoints+1;
@@ -50,8 +56,11 @@ if (size(FC,2)==0)
 end
 
 %[frames, descriptors] = vl_sift(I,'frames',FC,'floatdescriptors','verbose','verbose','verbose','verbose');
-[frames, descriptors] = vl_sift(I,'frames',FC);
-%[frames, descriptors] = vl_sift(I,'frames',FC,'verbose','verbose','verbose','verbose');
+%[frames, descriptors] = vl_sift(I,'frames',FC); % , 'orientations');
+%[frames, descriptors] = vl_sift(I,'frames',FC,'verbose','verbose','verbose','verbose','octaves',1,'firstoctave',0);
+[frames, descriptors] = vl_sift(I,'frames',FC,'octaves',1,'firstoctave',0);
+
+%[frames, descriptors] = vl_sift(I,'verbose',  'verbose','verbose','verbose','octaves',1,'firstoctave',1,'edgethresh',10);
 
 
 end

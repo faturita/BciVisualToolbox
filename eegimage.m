@@ -7,21 +7,19 @@ if (nargin<4)
     drawzerolevel=0;
 end
 
-ALL = 1;
-
 % mean(output(:,channel) is zero).  After round it WONT be zero anymore.
 signal = round(output(:,channel)*scale);
 
 % 6 is half the size of single scale descriptor.
 baseheight = (max(signal) - min(signal))+6;
 
-% The minimum height is 150
+% The minimum height is 150 (nothing is more arbitrary than this).
 if (baseheight < 150)
     baseheight = 150;
 end
 
 zerolevel= floor(baseheight/2) - floor((max(signal)+min(signal))/2);
-if (timespan ~= 160 && timespan ~= 50 && timespan ~= 128 && timespan ~=32 && timespan ~=1280 && timespan ~=512 && timespan ~= 256 && timespan ~= 240)
+if (timespan ~= 16 && timespan ~= 21 && timespan ~= 160 && timespan ~= 50 && timespan ~= 128 && timespan ~=32 && timespan ~=1280 && timespan ~=512 && timespan ~= 256 && timespan ~= 240)
     error('Not enough data points!!!');
 else
     %baseheight = rms(output,1)*4;
@@ -66,19 +64,15 @@ for t=1:scale:timespan
 end
 %figure('PaperPositionMode','manual');
 
+% Dots holds all the sample points locations in 2d.
 DOTS.XX = [];
 DOTS.YY = [];
 
 for t=1:scale:(timespan-scale)
     [Y X]=bresenham(t,plottedsignal(t), t+scale,plottedsignal(t+scale));
     
-    %if (siftinterpolated == 1)
-        DOTS.XX = [DOTS.XX; X];
-        DOTS.YY = [DOTS.YY; Y];
-    %else
-    %    DOTS(epoch,channel).XX = [DOTS(epoch,channel).XX; plottedsignal(t)];
-    %    DOTS(epoch,channel).YY = [DOTS(epoch,channel).YY; t];
-    %send
+    DOTS.XX = [DOTS.XX; X];
+    DOTS.YY = [DOTS.YY; Y];
     
     for i=1:size(X,1)
         B(X(i),Y(i)) = 255;

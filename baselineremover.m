@@ -7,6 +7,7 @@ output = zeros(windowsize,size(channelRange,2));
 pts=1:floor(51/downsize);
 
 [n,m]=size(output);
+
 %for channel=channelRange
    %baseline(:,channel) = bf(baseline(:,channel),pts,'pchip');
    %output(:,channel) = baseline(floor(51/downsize):floor(51/downsize)+windowsize-1,channel);

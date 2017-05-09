@@ -22,21 +22,23 @@ if (descriptorId > 0)
 
     % (x,y,sigma, rotation).
     frame = frames(:,descriptorId);
-    frame = round(frame);
-    x1=frame(2)-frame(3)*6;
-    y1=frame(2)+frame(3)*6;
-    x2=frame(1)-frame(3)*6;
-    y2=frame(1)+frame(3)*6;
+    %frame = round(frame);
+    x1=ceil(frame(2)-frame(4)*3*4/2);
+    y1=ceil(frame(2)+frame(4)*3*4/2);
+    x2=ceil(frame(1)-frame(3)*3*4/2);
+    y2=ceil(frame(1)+frame(3)*3*4/2);
 
     if (x1 < 1) x1 = 1;end
     if (x2 < 1) x2 = 1;end
+    if (x2 > size(I1,1)) x2 = size(I1,1);end
+    if (y2 > size(I1,2)) y2 = size(I1,2);end
     
     % Even if the patch is bigger I need to move one to fit the descriptor.
     Ij = I1(x1:y1,x2:y2);
     
     if (showpatch)
         imshow(Ij);
-        frame(2) = (frame(3)*12)/2+1;
+        frame(2) = (frame(4)*12)/2+1;
         frame(1) = (frame(3)*12)/2+1;
     else
         imshow(I1);
@@ -62,5 +64,7 @@ else
     img1 = imshow(I1);
     descriptor = descriptors;
 end
+
+%reshape(descriptors, [8 16] );
 
 end
