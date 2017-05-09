@@ -5,6 +5,7 @@ timespan = size(output,1);
 
 if (nargin<4)
     drawzerolevel=0;
+    save=false;
 end
 
 % mean(output(:,channel) is zero).  After round it WONT be zero anymore.

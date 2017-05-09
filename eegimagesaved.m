@@ -4,12 +4,12 @@ function image = eegimagesaved(epoch,label,output,channel,scale, drawzerolevel)
 
 global DOTS;
 
-[image, DOTS] = eegimage(channel,output,scale, drawzerolevel);
+[image, DOTS(epoch,channel)] = eegimage(channel,output,scale, drawzerolevel);
 
 
 if (true)
     fprintf('Saving data to e.%d.l.%d.c.%d.tif \n',epoch,label,channel);
-    imwrite(B,sprintf('%se.%d.l.%d.c.%d.tif',getimagepath(),epoch,label,channel),'Compression','none','Resolution',[timespan height]);
+    imwrite(image,sprintf('%se.%d.l.%d.c.%d.tif',getimagepath(),epoch,label,channel),'Compression','none','Resolution',size(image));
     %imwrite(B,sprintf('%se.%d.l.%d.c.%d.png',getimagepath(),epoch,label,channel));
 end
 
