@@ -1,4 +1,6 @@
 %% Frames, is F(channel, label, epoch), epoch, label, channel, descriptorid
+% if DescriptorId is zero, the patch is not shown. 
+%
 function descriptor = DisplayDescriptorImageByImage(frames,descriptors,image, descriptorId, showpatch)
 %
 % If descriptorId is equal to -1, it will show all the descriptors in only one figure
@@ -61,6 +63,7 @@ elseif (descriptorId <0)
     
     descriptor = descriptors(:,1);
 else
+    % Show only the image without the descriptor.
     img1 = imshow(I1);
     descriptor = descriptors;
 end

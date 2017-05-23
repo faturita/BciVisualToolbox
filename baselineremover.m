@@ -2,6 +2,8 @@ function X = baselineremover(signal,start,windowsize,channelRange,downsize)
         
 baseline = signal( start- floor(51/downsize):start-1,:);
 
+%baseline = zeros( size( start- floor(51/downsize):start-1,2),size(channelRange,2));
+
 output = zeros(windowsize,size(channelRange,2));
 
 pts=1:floor(51/downsize);

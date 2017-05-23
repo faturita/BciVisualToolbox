@@ -4,8 +4,10 @@ function image = eegimagesaved(epoch,label,output,channel,scale, drawzerolevel)
 
 global DOTS;
 
-[image, DOTS(epoch,channel)] = eegimage(channel,output,scale, drawzerolevel);
+DOTS(epoch,channel).XX = [];
+DOTS(epoch,channel).YY = [];
 
+[image, DOTS(epoch,channel)] = eegimage(channel,output,scale, drawzerolevel);
 
 if (true)
     fprintf('Saving data to e.%d.l.%d.c.%d.tif \n',epoch,label,channel);

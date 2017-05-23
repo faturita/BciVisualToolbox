@@ -11,11 +11,17 @@ close all
 run('/Users/rramele/work/vlfeat/toolbox/vl_setup')
 
 % General parameters
-gamma = 1;
+gamma = 2;
 % Scales
 sv=4;
 st=11;
 siftdescriptordensity=1;
+
+% Hidden parameters
+% Smooth on first octave
+% Orientation
+% Fixed Octave, Number of octaves
+
 
 % Dataset parameters
 label=1;
@@ -30,10 +36,18 @@ output = baselineremover(data.X,(ceil(data.trial(trial)/downsize)+ceil(64/downsi
 output=output(:,1);
 
 % Pick random EEG
-%output = fakeeegoutput(gamma, 1:8,label,512);
+%output = fakeeegoutput(gamma, 1:8,label,256);
 
 % Pick a dead signal.
 %output = zeros(256,1);
+
+t = (-1:0.01:1)';
+
+impulse = t==0;
+unitstep = t>=0;
+ramp = t.*unitstep;
+quad = t.^2.*unitstep;
+
 
 % Transform the signal into a new fresh images and gather all the 
 % 2-d datapoints.
@@ -64,14 +78,16 @@ figure;DisplayDescriptorImageByImage(patternframes,descriptors,patternimage,1);
 descriptors = descriptors(:,1);
 
 % Display Descriptor Values
-reshape(descriptors, [8 16] );
+reshape(descriptors, [8 16] )
 
 
 %I = A(:,3)';
 %I = reshape(I,size(patternimage));
 %imshow(I)
 
-figure;[I,A] = DisplayDescriptorGradient();
+figure;DisplayDescriptorGradient('baseimageonscale.txt');
+
+figure;[I,A] = DisplayDescriptorGradient('grads.txt');
 
 figure;
 DisplayDescriptorImageByImageAndGradient(patternframes,descriptors,patternimage,1,A);

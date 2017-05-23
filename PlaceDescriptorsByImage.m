@@ -3,9 +3,11 @@
 %
 % If KS is [], descriptors are located according to psiftdescriptordensity
 % as long as they fit inside the available image space.
-function [frames, descriptors] = PlaceDescriptorsByImage(image,DOTS,psiftscale, psiftdescriptordensity, KS)
+function [frames, descriptors] = PlaceDescriptorsByImage(image,DOTS,psiftscale, psiftdescriptordensity, KS, zerolevel)
 
-verbose=GetParameter('verbose');
+if (nargin==5)
+    zerolevel=0;
+end
 
 I = image;
 I = single(I);
@@ -34,8 +36,11 @@ while (i<=size(DOTS.XX,1))
         end
         
         if (DOTS.YY(i) == KS(keypoints))
-            fc = [DOTS.YY(i);DOTS.XX(i);siftscale;psiftscale(2);0];
-            fc = [DOTS.YY(i);75;psiftscale(1);psiftscale(2);0];
+            if (zerolevel==0)
+                fc = [DOTS.YY(i);DOTS.XX(i);siftscale;psiftscale(2);0];
+            else
+                fc = [DOTS.YY(i);zerolevel;siftscale;psiftscale(2);0];
+            end
             %fc = [k;75;2;0];
             
             FC = [FC fc];
@@ -59,6 +64,10 @@ end
 %[frames, descriptors] = vl_sift(I,'frames',FC); % , 'orientations');
 %[frames, descriptors] = vl_sift(I,'frames',FC,'verbose','verbose','verbose','verbose','octaves',1,'firstoctave',0);
 [frames, descriptors] = vl_sift(I,'frames',FC,'octaves',1,'firstoctave',0);
+
+%descriptors = vl_hog(I,8);
+%descriptors = reshape(descriptors, [1 31*size(descriptors,1)*size(descriptors,2)] );
+%frames = FC;
 
 %[frames, descriptors] = vl_sift(I,'verbose',  'verbose','verbose','verbose','octaves',1,'firstoctave',1,'edgethresh',10);
 

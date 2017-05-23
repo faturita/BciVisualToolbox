@@ -1,6 +1,6 @@
 function output = fakeeegoutput(imagescale, class, channelRange,nSampleFreq)
 
-% Ru?do uniforme con varianza 2.
+% Ruido uniforme con varianza 2.
 output = rand(nSampleFreq,size(channelRange,2))*0;
 output = FakeNoisyEeg(15,size(channelRange,2),nSampleFreq);
     
