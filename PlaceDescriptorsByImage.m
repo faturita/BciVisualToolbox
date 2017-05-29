@@ -61,9 +61,9 @@ if (size(FC,2)==0)
 end
 
 %[frames, descriptors] = vl_sift(I,'frames',FC,'floatdescriptors','verbose','verbose','verbose','verbose');
-%[frames, descriptors] = vl_sift(I,'frames',FC); % , 'orientations');
+[frames, descriptors] = vl_sift(I,'frames',FC); % , 'orientations');
 %[frames, descriptors] = vl_sift(I,'frames',FC,'verbose','verbose','verbose','verbose','octaves',1,'firstoctave',0);
-[frames, descriptors] = vl_sift(I,'frames',FC,'octaves',1,'firstoctave',0);
+%[frames, descriptors] = vl_sift(I,'frames',FC,'octaves',1,'firstoctave',0);
 
 %descriptors = vl_hog(I,8);
 %descriptors = reshape(descriptors, [1 31*size(descriptors,1)*size(descriptors,2)] );

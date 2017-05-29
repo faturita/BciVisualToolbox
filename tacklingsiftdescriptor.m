@@ -31,7 +31,7 @@ subject=1;trial=10;downsize=1;flash=1;Fs=256;windowsize=1;channelRange=1:8;
 load(sprintf('/Users/rramele/GoogleDrive/BCI.Dataset/008-2014/A%02d.mat',subject));
 
 output = baselineremover(data.X,(ceil(data.trial(trial)/downsize)+ceil(64/downsize)*flash),Fs*windowsize,channelRange,downsize);
-
+fdsfs
 % Just pick one channel.
 output=output(:,1);
 
