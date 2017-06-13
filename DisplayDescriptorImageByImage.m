@@ -25,10 +25,11 @@ if (descriptorId > 0)
     % (x,y,sigma, rotation).
     frame = frames(:,descriptorId);
     %frame = round(frame);
-    x1=ceil(frame(2)-frame(4)*3*4/2);
-    y1=ceil(frame(2)+frame(4)*3*4/2);
-    x2=ceil(frame(1)-frame(3)*3*4/2);
-    y2=ceil(frame(1)+frame(3)*3*4/2);
+    S=floor(sqrt(2)*15/4);
+    x1=ceil(frame(2)-frame(4)*S*4/2);
+    y1=ceil(frame(2)+frame(4)*S*4/2);
+    x2=ceil(frame(1)-frame(3)*S*4/2);
+    y2=ceil(frame(1)+frame(3)*S*4/2);
 
     if (x1 < 1) x1 = 1;end
     if (x2 < 1) x2 = 1;end
@@ -40,8 +41,9 @@ if (descriptorId > 0)
     
     if (showpatch)
         imshow(Ij);
-        frame(2) = (frame(4)*12)/2+1;
-        frame(1) = (frame(3)*12)/2+1;
+        %S = 12;
+        frame(2) = (frame(4)*S*4)/2+1;  % +5
+        frame(1) = (frame(3)*S*4)/2+1;
     else
         imshow(I1);
     end
@@ -51,6 +53,8 @@ if (descriptorId > 0)
     h1 = vl_plotframe(frame) ;
     set(h1,'color','k','linewidth',3) ;
 
+    % The descriptor patch is a little bit smaller than how it is actually
+    % is.
     h3 = vl_plotsiftdescriptor(descriptors(:,descriptorId),frame) ;
     set(h3,'color','g') ;
 elseif (descriptorId <0)

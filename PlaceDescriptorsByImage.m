@@ -3,10 +3,13 @@
 %
 % If KS is [], descriptors are located according to psiftdescriptordensity
 % as long as they fit inside the available image space.
-function [frames, descriptors] = PlaceDescriptorsByImage(image,DOTS,psiftscale, psiftdescriptordensity, KS, zerolevel)
+function [frames, descriptors] = PlaceDescriptorsByImage(image,DOTS,psiftscale, psiftdescriptordensity, KS, zerolevel, verbose,cells)
 
 if (nargin==5)
     zerolevel=0;
+    verbose=0;
+elseif (nargin==6)
+    verbose=0;
 end
 
 I = image;
@@ -60,9 +63,17 @@ if (size(FC,2)==0)
     error('error');
 end
 
+if (verbose)
+    [frames, descriptors] = vl_sift(I,'frames',FC,'verbose','verbose','verbose','verbose','octaves',1,'firstoctave',0);
+else
+    [frames, descriptors] = vl_sift(I,'frames',FC,'octaves',1,'firstoctave',0);
+end
+
+
 %[frames, descriptors] = vl_sift(I,'frames',FC,'floatdescriptors','verbose','verbose','verbose','verbose');
-[frames, descriptors] = vl_sift(I,'frames',FC); % , 'orientations');
+%[frames, descriptors] = vl_sift(I,'frames',FC,'verbose','verbose','verbose'); % , 'orientations');
 %[frames, descriptors] = vl_sift(I,'frames',FC,'verbose','verbose','verbose','verbose','octaves',1,'firstoctave',0);
+%[frames, descriptors] = vl_sift(I,'frames',FC,'octaves',10,'firstoctave',3,'verbose','verbose','verbose','verbose','verbose','verbose');
 %[frames, descriptors] = vl_sift(I,'frames',FC,'octaves',1,'firstoctave',0);
 
 %descriptors = vl_hog(I,8);

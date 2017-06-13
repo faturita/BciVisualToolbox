@@ -1,5 +1,8 @@
 %% Converts the signal for the subject,experiment,channel stored in output into a saved image.
 %% If the signal amplitud is less than 150, it is defaulted to 150.
+%%
+%% channel specifies the specific channel to retrieve.
+%% output  on the other hand is the EEG matrix for a given epoch.
 function [image, DOTS] = eegimage(channel,output,scale, drawzerolevel)
 timespan = size(output,1);
 
