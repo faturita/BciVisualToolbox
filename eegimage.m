@@ -1,9 +1,16 @@
-%% Converts the signal for the subject,experiment,channel stored in output into a saved image.
-%% If the signal amplitud is less than 150, it is defaulted to 150.
-%%
-%% channel specifies the specific channel to retrieve.
-%% output  on the other hand is the EEG matrix for a given epoch.
-function [image, DOTS] = eegimage(channel,output,scale, drawzerolevel)
+% This function converts the matrix signal output, for the specified
+% channel into a binary image @ image.  The scale value can be used to 
+% precisely set the scale, which at the same time plays the role of
+% adjusting the resolution (because the output matrix is decimal rounded).
+%
+% The drawzerolevel parameters can be specified if you want to have a line
+% located at the temporal media of the signal (useful for debugging).
+function [image, DOTS, zerolevel] = eegimage(channel,output,scale, drawzerolevel)
+
+verbose=0;
+DEFAULTHEIGHT = 80;
+BUFFERSIZE = 12/2;
+
 timespan = size(output,1);
 
 if (nargin<4)
@@ -15,18 +22,16 @@ end
 signal = round(output(:,channel)*scale);
 
 % 6 is half the size of single scale descriptor.
-baseheight = (max(signal) - min(signal))+6;
+baseheight = (max(signal) - min(signal))+BUFFERSIZE;
 
 % The minimum height is 150 (nothing is more arbitrary than this).
-if (baseheight < 150)
-    baseheight = 150;
+if (baseheight < DEFAULTHEIGHT)
+    baseheight = DEFAULTHEIGHT;
 end
 
 zerolevel= floor(baseheight/2) - floor((max(signal)+min(signal))/2);
 if (timespan ~= 16 && timespan ~= 21 && timespan ~= 160 && timespan ~= 50 && timespan ~= 128 && timespan ~=32 && timespan ~=1280 && timespan ~=512 && timespan ~= 256 && timespan ~= 240)
     error('Not enough data points!!!');
-else
-    %baseheight = rms(output,1)*4;
 end
 
 height = baseheight;
@@ -36,29 +41,29 @@ timespan = timespan * scale;
 % Zeros(h, size);
 B = zeros(height,timespan);
 
-fprintf('Signal Amplitude %f\n', floor( max(signal) - min(signal) ));
-fprintf('Generating image size: %f, %f\n', timespan, height);
-fprintf ('Zero level: %d\n', zerolevel);
+if (verbose) fprintf('Signal Amplitude %f\n', floor( max(signal) - min(signal) ));end
+if (verbose) fprintf('Generating image size: %f, %f\n', timespan, height);end
+if (verbose) fprintf ('Zero level: %d\n', zerolevel);end
 
 plottedsignal = zeros(timespan);
 
-% Timespan est? tambi?n escalado.
+% Plot the original dots from the signal forming an image.
 for t=1:scale:timespan
     % REVISAR BIEN  mod estar?a demas
     plottedsignal(t) = (signal(floor(t/scale)+mod(1,scale))+zerolevel);
     
-    % Basic outliers rejection.NO DEBERIA PASAR
+    % Basic outliers rejection.
     if (plottedsignal(t)> height)
         plottedsignal(t)
         plottedsignal(t) = height-1;
         
-        error('NOOOOO');
+        error('The signal went out of boundaries.');
     end
     if (plottedsignal(t)< 1)
         plottedsignal(t)
         plottedsignal(t) = 1;
         
-        error('NOOOOOOO');
+        error('The signal went bellow lower boundary.');
     end
     
     if (drawzerolevel == 1)
@@ -72,6 +77,7 @@ end
 DOTS.XX = [];
 DOTS.YY = [];
 
+% Fill in discrete interpolation using bresenham
 for t=1:scale:(timespan-scale)
     [Y X]=bresenham(t,plottedsignal(t), t+scale,plottedsignal(t+scale));
     
@@ -93,6 +99,7 @@ end
 
 %imwrite(rgb2gray(imread('C:\Users\User\Desktop\shoes.bmp')), 'C:\Users\User\Desktop\shoes.bmp');
 
+% Do a final check
 s=[height timespan];
 
 if ( s(1)  ~= size(B,1) || s(2) ~= size(B,2) )
@@ -101,3 +108,5 @@ if ( s(1)  ~= size(B,1) || s(2) ~= size(B,2) )
     error('Image dimension rearranged due to outliers...');
 end
 image = B;
+
+end
