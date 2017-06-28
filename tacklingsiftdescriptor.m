@@ -1,13 +1,16 @@
 % First clean up everything so that we can reload a new
 % fresh version of mex files and dynamic libraries for vlfeat.
 
+% Use me if you want to check the capacity of the SIFT descriptor to
+% capture what is going on on the underlying signal.
+
 clear mex
 clc
 clear
 clearvars
 close all
 
-% Restart vl-feat85
+% Restart vl-feat
 run('/Users/rramele/work/vlfeat/toolbox/vl_setup')
 
 
