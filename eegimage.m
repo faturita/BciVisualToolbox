@@ -8,7 +8,7 @@
 function [image, DOTS, zerolevel] = eegimage(channel,output,scale, drawzerolevel)
 
 verbose=0;
-DEFAULTHEIGHT = 80;
+DEFAULTHEIGHT = 150;
 BUFFERSIZE = 12/2;
 
 timespan = size(output,1);

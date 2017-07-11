@@ -8,6 +8,13 @@ IX = [];
 
 for epoch=epochRange
     DESCRIPTORS = F(channel, labelRange(epoch), epoch).descriptors;
+    
+    %assert( size(DESCRIPTORS,1) > 0, 'Descriptors not found for epoch');
+    
+    if (size(DESCRIPTORS,1) == 0)
+        disp('dd');
+    end
+    
     M = [M DESCRIPTORS];
     
     for id=1:size(DESCRIPTORS,2)
@@ -82,7 +89,7 @@ end
 %[size(M,2) size(C',2)]
 assert( size(M,2) >= size(C',2) );
 
-%assert( size(M,2) == originalsize, 'The descriptor matrix size has changed so it may be descriptor which are not unique' );
+assert( size(M,2) == originalsize, 'The descriptor matrix size has changed so it may be descriptor which are not unique' );
 
 % UFF
 end
