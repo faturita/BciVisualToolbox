@@ -3,9 +3,13 @@
 % precisely set the scale, which at the same time plays the role of
 % adjusting the resolution (because the output matrix is decimal rounded).
 %
+% Scale can be used to adjust the amplitud scale of the signal to image
+% transform.  
+% Timescale adjust the scale on the time axis.
+%
 % The drawzerolevel parameters can be specified if you want to have a line
 % located at the temporal media of the signal (useful for debugging).
-function [image, DOTS, zerolevel] = eegimage(channel,output,scale, drawzerolevel)
+function [image, DOTS, zerolevel] = eegimage(channel,output,scale,timescale, drawzerolevel)
 
 verbose=0;
 DEFAULTHEIGHT = 150;
@@ -36,7 +40,7 @@ end
 
 height = baseheight;
 
-timespan = timespan * scale;
+timespan = timespan * timescale;
 
 % Zeros(h, size);
 B = zeros(height,timespan);
@@ -48,9 +52,9 @@ if (verbose) fprintf ('Zero level: %d\n', zerolevel);end
 plottedsignal = zeros(timespan);
 
 % Plot the original dots from the signal forming an image.
-for t=1:scale:timespan
+for t=1:timescale:timespan
     % REVISAR BIEN  mod estar?a demas
-    plottedsignal(t) = (signal(floor(t/scale)+mod(1,scale))+zerolevel);
+    plottedsignal(t) = (signal(floor(t/timescale)+mod(1,timescale))+zerolevel);
     
     % Basic outliers rejection.
     if (plottedsignal(t)> height)
@@ -78,8 +82,8 @@ DOTS.XX = [];
 DOTS.YY = [];
 
 % Fill in discrete interpolation using bresenham
-for t=1:scale:(timespan-scale)
-    [Y X]=bresenham(t,plottedsignal(t), t+scale,plottedsignal(t+scale));
+for t=1:timescale:(timespan-timescale)
+    [Y X]=bresenham(t,plottedsignal(t), t+timescale,plottedsignal(t+timescale));
     
     DOTS.XX = [DOTS.XX; X];
     DOTS.YY = [DOTS.YY; Y];

@@ -89,7 +89,7 @@ end
 %[size(M,2) size(C',2)]
 assert( size(M,2) >= size(C',2) );
 
-assert( size(M,2) == originalsize, 'The descriptor matrix size has changed so it may be descriptor which are not unique' );
+if (~(size(M,2) == originalsize)) warning('The descriptor matrix size has changed so there may be some descriptor that is not unique.' );end
 
 % UFF
 end
