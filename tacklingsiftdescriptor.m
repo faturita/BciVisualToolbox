@@ -17,8 +17,8 @@ run('/Users/rramele/work/vlfeat/toolbox/vl_setup')
 % General parameters
 gamma = 1;
 % Scales
-sv=1;
-st=10;
+sv=5;
+st=3;
 siftdescriptordensity=1;
 
 % Hidden parameters
@@ -39,8 +39,10 @@ output = baselineremover(data.X,(ceil(data.trial(trial)/downsize)+ceil(64/downsi
 % Just pick one channel.
 output=output(:,1)*1;
 
+output = decimate(output,16);
+
 % Pick random EEG
-%output = fakeeegoutput(gamma, 1:8,label,256)*6;
+%output = fakeeegoutput(gamma, 1:8,label,16)*6;
 
 % Pick a dead signal.
 %output = zeros(256,1);
@@ -53,20 +55,30 @@ ramp = t.*unitstep;
 quad = t.^2.*unitstep;
 
 
+%%
+
+routput = floor(output*10);
+size(unique(routput))
+
+max(routput)-min(routput)
+
+gamma=10;
+
 % Transform the signal into a new fresh images and gather all the 
 % 2-d datapoints.
-[patternimage, patternDOTS] = eegimage(channel,output,gamma,false);
+[patternimage, patternDOTS, zerolevel] = eegimage(channel,output,gamma,false);
+
 
 %patternimage = addsomenoise(patternimage);
 
 %patternimage = imread('sample.jpg');
 %patternimage = rgb2gray(patternimage);
 
-patternimage = zeros(150,256);
+%patternimage = zeros(150,256);
 
 % Add some random extra lines.
 for i=63:67
-    patternimage(i,180) = 255;
+    %patternimage(i,180) = 255;
 end
 
 for i=1:256
@@ -74,10 +86,10 @@ for i=1:256
 end
 
 
-qKS = 128;
-[patternframes, descriptors] = PlaceDescriptorsByImage(patternimage, patternDOTS,[st sv], siftdescriptordensity,qKS,75,true);
+qKS = 32;
+[patternframes, descriptors] = PlaceDescriptorsByImage(patternimage, patternDOTS,[st sv], siftdescriptordensity,qKS,zerolevel,true);
 
-figure;DisplayDescriptorImageByImage(patternframes,descriptors,patternimage,1,true);
+figure;DisplayDescriptorImageByImage(patternframes,descriptors,patternimage,1,false);
 
 %descriptors = single(descriptors);
 
