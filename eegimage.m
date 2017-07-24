@@ -9,17 +9,17 @@
 %
 % The drawzerolevel parameters can be specified if you want to have a line
 % located at the temporal media of the signal (useful for debugging).
-function [image, DOTS, zerolevel] = eegimage(channel,output,scale,timescale, drawzerolevel)
+function [image, DOTS, zerolevel] = eegimage(channel,output,scale,timescale, drawzerolevel,defaultheight)
 
 verbose=0;
-DEFAULTHEIGHT = 150;
+DEFAULTHEIGHT = defaultheight;
 BUFFERSIZE = 12/2;
 
 timespan = size(output,1);
 
 if (nargin<4)
     drawzerolevel=0;
-    save=false;
+    DEFAULTHEIGHT=256;
 end
 
 % mean(output(:,channel) is zero).  After round it WONT be zero anymore.
