@@ -35,6 +35,7 @@ if (descriptorId > 0)
     if (x2 < 1) x2 = 1;end
     if (x2 > size(I1,1)) x2 = size(I1,1);end
     if (y2 > size(I1,2)) y2 = size(I1,2);end
+    if (y1 > size(I1,1)) y1 = size(I1,1);end
     
     % Even if the patch is bigger I need to move one to fit the descriptor.
     Ij = I1(x1:y1,x2:y2);
