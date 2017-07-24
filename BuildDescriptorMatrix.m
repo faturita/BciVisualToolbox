@@ -12,7 +12,7 @@ for epoch=epochRange
     %assert( size(DESCRIPTORS,1) > 0, 'Descriptors not found for epoch');
     
     if (size(DESCRIPTORS,1) == 0)
-        disp('dd');
+        %disp('dd');
     end
     
     M = [M DESCRIPTORS];

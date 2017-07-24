@@ -13,6 +13,9 @@ BUFFERSIZE = 12/2;
 
 timespan = size(output,1);
 
+% Invert signal so that the image will be exactly as the source signal.
+output = output * (-1);
+
 if (nargin<4)
     drawzerolevel=0;
     save=false;
