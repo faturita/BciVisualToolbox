@@ -1,9 +1,7 @@
 % Save Experiment
-exp=1;
-
 dirorigin=sprintf('%s%s%s',getdatabasepath(),filesep,'Plots');
-dirtarget=sprintf('%s%s%s',getdatabasepath(),filesep,sprintf('%d',exp));
+dirtarget=sprintf('%s%s%s',getdatabasepath(),filesep,sprintf('%d',expcode));
 
 
 copyfile(dirorigin,dirtarget);
-save(sprintf('Experiment.%d',exp));
+save(sprintf('Experiment.%d',expcode));
