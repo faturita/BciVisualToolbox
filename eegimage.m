@@ -37,8 +37,8 @@ if (baseheight < DEFAULTHEIGHT)
 end
 
 zerolevel= floor(baseheight/2) - floor((max(signal)+min(signal))/2);
-if (timespan ~= 16 && timespan ~= 21 && timespan ~= 160 && timespan ~= 50 && timespan ~= 128 && timespan ~=32 && timespan ~=1280 && timespan ~=512 && timespan ~= 256 && timespan ~= 240)
-    error('Not enough data points!!!');
+if (timespan ~= 64 && timespan ~= 16 && timespan ~= 21 && timespan ~= 160 && timespan ~= 50 && timespan ~= 128 && timespan ~=32 && timespan ~=1280 && timespan ~=512 && timespan ~= 256 && timespan ~= 240)
+    %error('Not enough data points!!!');
 end
 
 height = baseheight;
