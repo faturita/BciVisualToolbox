@@ -1,7 +1,7 @@
-function output = fakeeegoutput(imagescale, class, channelRange,nSampleFreq)
+function output = fakeeegoutput(imagescale, class, channelRange,nSampleFreq,length,amplification)
 
 % Ruido uniforme con varianza 2.
-output = rand(nSampleFreq,size(channelRange,2))*4;
+output = rand(length,size(channelRange,2))*amplification;
 %output = FakeNoisyEeg(15,size(channelRange,2),nSampleFreq);
     
 Fs = nSampleFreq;             % Sampling frequency (EPOC frequency)
