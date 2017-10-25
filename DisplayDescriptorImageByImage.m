@@ -51,13 +51,14 @@ if (descriptorId > 0)
 
     descriptor = descriptors;
 
-    h1 = vl_plotframe(frame) ;
-    set(h1,'color','k','linewidth',3) ;
+    %h1 = vl_plotframe(frame) ;
+    %set(h1,'color','k','linewidth',3) ;
 
     % The descriptor patch is a little bit smaller than how it is actually
     % is.
     h3 = vl_plotsiftdescriptor(descriptors(:,descriptorId),frame) ;
     set(h3,'color','g') ;
+
 elseif (descriptorId <0)
     img1 = imshow(I1);
     h1 = vl_plotframe(frames) ;
