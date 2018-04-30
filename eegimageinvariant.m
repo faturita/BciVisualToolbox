@@ -9,7 +9,7 @@
 %
 % The drawzerolevel parameters can be specified if you want to have a line
 % located at the temporal media of the signal (useful for debugging).
-function [image, DOTS, zerolevel] = eegimage2(channel,output,scale,timescale, drawzerolevel,defaultheight)
+function [image, DOTS, zerolevel, height] = eegimageinvariant(channel,output,scale,timescale, drawzerolevel,defaultheight)
 
 verbose=0;
 DEFAULTHEIGHT = defaultheight;
@@ -29,7 +29,7 @@ end
 signal = round(output(:,channel)*scale);
 
 % 6 is half the size of single scale descriptor.
-baseheight = (max(signal) - min(signal))+BUFFERSIZE;
+baseheight = (max(signal) - min(signal))+BUFFERSIZE
 
 % The minimum height is 150 (nothing is more arbitrary than this).
 if (baseheight < DEFAULTHEIGHT)
@@ -41,7 +41,15 @@ if (timespan ~= 64 && timespan ~= 16 && timespan ~= 21 && timespan ~= 160 && tim
     %error('Not enough data points!!!');
 end
 
-height = baseheight;
+if (zerolevel < baseheight/2)
+    temp=ceil(baseheight/2)-zerolevel;
+    zerolevel=ceil(baseheight/2);
+    height = baseheight + temp; 
+else
+    height = baseheight + 2 * zerolevel - baseheight;
+end
+
+%height = baseheight;
 
 timespan = timespan * timescale;
 
@@ -52,7 +60,7 @@ if (verbose) fprintf('Signal Amplitude %f\n', floor( max(signal) - min(signal) )
 if (verbose) fprintf('Generating image size: %f, %f\n', timespan, height);end
 if (verbose) fprintf ('Zero level: %d\n', zerolevel);end
 
-plottedsignal = zeros(timespan);
+plottedsignal = zeros(timespan,1);
 
 % Plot the original dots from the signal forming an image.
 for t=1:timescale:timespan
@@ -62,6 +70,8 @@ for t=1:timescale:timespan
     % Basic outliers rejection.
     if (plottedsignal(t)> height)
         plottedsignal(t)
+        height
+        zerolevel
         plottedsignal(t) = height-1;
         
         error('The signal went out of boundaries.');

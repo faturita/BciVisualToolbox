@@ -72,6 +72,8 @@ end
 TODELETE = unique(TODELETE);
 TODELETE = sort(TODELETE,'descend');
 
+dodelete = false;
+
 %disp('Elementos no repetidos a borrar:');
 %size(TODELETE,1)
 %size(IX)
@@ -81,8 +83,10 @@ for i=1:size(TODELETE,1)
     %size(TODELETE)
     %size(IX)
     %TODELETE(i)
-    IX(TODELETE(i),:) = [];
-    M(:,TODELETE(i)) = [];
+    if (dodelete)
+        IX(TODELETE(i),:) = [];
+        M(:,TODELETE(i)) = [];
+    end
 end
 
 % M es la nueva con elementos eliminados, y C era la original.

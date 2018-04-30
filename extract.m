@@ -1,6 +1,6 @@
 function X = extract(signal,start,windowsize)
 
-start:start+windowsize-1
+[start start+windowsize-1]
 X = signal( start:start+windowsize-1, :);
 
 

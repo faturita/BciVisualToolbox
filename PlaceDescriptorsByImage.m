@@ -12,6 +12,8 @@ elseif (nargin==6)
     verbose=0;
 end
 
+assert( size(KS,1) >= size(KS,2), 'KS Wrong direction.');
+
 I = image;
 I = single(I);
 
@@ -38,7 +40,7 @@ while (i<=size(DOTS.XX,1))
             keypoints = keypoints + 1;
         end
         
-        if (DOTS.YY(i) == KS(keypoints))
+        if (DOTS.YY(i) == KS(keypoints,1))
             if (zerolevel==0)
                 fc = [DOTS.YY(i);DOTS.XX(i);siftscale;psiftscale(2);0];
             else
@@ -53,7 +55,7 @@ while (i<=size(DOTS.XX,1))
 
     %end
     i=i+iterator;
-    if (size(KS,2)<keypoints)
+    if (size(KS,1)<keypoints)
         break;
     end
 end

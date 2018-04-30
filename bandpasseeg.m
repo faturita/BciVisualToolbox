@@ -1,11 +1,21 @@
-function X = bandpasseeg(signal, channelRange, Fs)
+function X = bandpasseeg(signal, channelRange, Fs, Wn,delaymax)
+
+if (nargin<4)
+    Wn=4;
+end
+
 % Band pass filter.  Originally it was 4,5/ (Fs/2) )
-[b,a] = butter(4,4/(Fs/2));
+[b,a] = butter(4,Wn/(Fs/2));
 
 %x1 = 10*sin(2*pi*10*t) + signal ;
 
 gr = grpdelay(b,a,Fs);   % plot group delay
-D = mean(gr); % filter delay in samples
+
+if (delaymax)
+    D = max(gr); % filter delay in samples
+else
+    D = mean(gr);
+end
 D = floor(D);
 
 X = zeros(size(signal,1),size(channelRange,1));
