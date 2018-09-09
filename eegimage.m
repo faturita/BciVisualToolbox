@@ -9,11 +9,13 @@
 %
 % The drawzerolevel parameters can be specified if you want to have a line
 % located at the temporal media of the signal (useful for debugging).
-function [image, DOTS, zerolevel] = eegimage2(channel,output,scale,timescale, drawzerolevel,defaultheight)
+function [image, DOTS, zerolevel] = eegimage(channel,output,scale,timescale, drawzerolevel,defaultheight)
 
 verbose=0;
 DEFAULTHEIGHT = defaultheight;
 BUFFERSIZE = 12/2;
+PIXELCOLOR=0;
+PIXELBACKGROUND=255;
 
 timespan = size(output,1);
 
@@ -47,6 +49,7 @@ timespan = timespan * timescale;
 
 % Zeros(h, size);
 B = zeros(height,timespan);
+B = ones(height,timespan)*PIXELBACKGROUND;
 
 if (verbose) fprintf('Signal Amplitude %f\n', floor( max(signal) - min(signal) ));end
 if (verbose) fprintf('Generating image size: %f, %f\n', timespan, height);end
@@ -74,9 +77,9 @@ for t=1:timescale:timespan
     end
     
     if (drawzerolevel == 1)
-        B(zerolevel,t) = 255;
+        B(zerolevel,t) = PIXELCOLOR;
     end
-    B(plottedsignal(t),t) = 255;
+    B(plottedsignal(t),t) = PIXELCOLOR;
 end
 %figure('PaperPositionMode','manual');
 
@@ -92,7 +95,7 @@ for t=1:timescale:(timespan-timescale)
     DOTS.YY = [DOTS.YY; Y];
     
     for i=1:size(X,1)
-        B(X(i),Y(i)) = 255;
+        B(X(i),Y(i)) = PIXELCOLOR;
     end
 end
 
