@@ -9,13 +9,26 @@
 %
 % The drawzerolevel parameters can be specified if you want to have a line
 % located at the temporal media of the signal (useful for debugging).
-function [image, DOTS, zerolevel] = eegimage(channel,output,scale,timescale, drawzerolevel,defaultheight)
+function [image, DOTS, zerolevel] = eegimage(channel,output,scale,timescale, drawzerolevel,defaultheight,pixelcolorinverted,interpolate)
 
 verbose=0;
 DEFAULTHEIGHT = defaultheight;
 BUFFERSIZE = 12/2;
-PIXELCOLOR=0;
-PIXELBACKGROUND=255;
+PIXELCOLOR=255;
+PIXELBACKGROUND=0;
+
+if (nargin<8)
+    interpolate=true;
+end
+
+if (nargin<7)
+    pixelcolorinverted=false;
+end
+    
+if (pixelcolorinverted)
+    PIXELCOLOR=0;
+    PIXELBACKGROUND=255;
+end
 
 timespan = size(output,1);
 
@@ -88,14 +101,16 @@ DOTS.XX = [];
 DOTS.YY = [];
 
 % Fill in discrete interpolation using bresenham
-for t=1:timescale:(timespan-timescale)
-    [Y X]=bresenham(t,plottedsignal(t), t+timescale,plottedsignal(t+timescale));
-    
-    DOTS.XX = [DOTS.XX; X];
-    DOTS.YY = [DOTS.YY; Y];
-    
-    for i=1:size(X,1)
-        B(X(i),Y(i)) = PIXELCOLOR;
+if (interpolate)
+    for t=1:timescale:(timespan-timescale)
+        [Y X]=bresenham(t,plottedsignal(t), t+timescale,plottedsignal(t+timescale));
+
+        DOTS.XX = [DOTS.XX; X];
+        DOTS.YY = [DOTS.YY; Y];
+
+        for i=1:size(X,1)
+            B(X(i),Y(i)) = PIXELCOLOR;
+        end
     end
 end
 
