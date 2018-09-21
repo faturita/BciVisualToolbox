@@ -5,7 +5,7 @@ if (nargin<4)
 end
 
 if (nargin<5)
-    delaymax=false;
+    delaymax = false;
 end
 
 % Band pass filter.  Originally it was 4,5/ (Fs/2) )
