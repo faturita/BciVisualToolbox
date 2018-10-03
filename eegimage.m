@@ -14,8 +14,8 @@ function [image, DOTS, zerolevel] = eegimage(channel,output,scale,timescale, dra
 verbose=0;
 DEFAULTHEIGHT = defaultheight;
 BUFFERSIZE = 12/2;
-PIXELCOLOR=0;
-PIXELBACKGROUND=255;
+PIXELCOLOR=255;
+PIXELBACKGROUND=0;
 
 timespan = size(output,1);
 
