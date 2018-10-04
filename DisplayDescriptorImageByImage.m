@@ -41,7 +41,7 @@ if (descriptorId > 0)
     Ij = I1(x1:y1,x2:y2);
     
     if (showpatch)
-        imshow(RemoveWhiteSpace(Ij));
+        imshow(Ij);
         %S = 12;
         frame(2) = (frame(4)*S*4)/2+1;  % +5
         frame(1) = (frame(3)*S*4)/2+1;
