@@ -70,7 +70,7 @@ elseif strcmpi(actionStr,'receive')
     
     timeout = DEFAULT_TIMEOUT;
     
-    if nargin > 3
+    if nargin >= 3
         % Override default timeout if specified.
         timeout = varargin{3};
     end % if
@@ -142,11 +142,16 @@ else
         mssg = mssg(1:packet.getLength);     
         inetAddress = packet.getAddress;
         sourceHost = char(inetAddress.getHostAddress);
+        sourcePort = packet.getPort;
         varargout{1} = mssg;
         
         if nargout > 1
             varargout{2} = sourceHost;
         end % if
+        
+        if nargout > 2
+            varargout{3} = sourcePort;
+        end
         
     catch receiveError
 
